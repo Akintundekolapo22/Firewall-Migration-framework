@@ -1,7 +1,7 @@
 ---
 # ==============================================================================
 # Ansible Playbook: scripts/rollback-checklist.yml
-# Purpose: Enterprise Firewall Migration Rollback Automation Workflow
+# Purpose: Firewall Migration Rollback Automation Workflow
 # Safety Controls:
 #   - Default execution interlock: rollback_approved=false
 #   - Pre-change golden backup validation (existence, readability, non-zero size)
@@ -9,7 +9,7 @@
 #   - Dual execution paths: Safe Lab Simulation vs. Production Hardware Restore
 # ==============================================================================
 
-- name: Enterprise Firewall Rollback and Health Checklist Workflow
+- name: Firewall Migration Rollback and Health Checklist Workflow
   hosts: firewalls
   gather_facts: false
   vars:

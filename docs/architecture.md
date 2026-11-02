@@ -2,11 +2,11 @@
 
 ## 1. Architectural Overview
 
-The **Enterprise Firewall Migration and Security Hardening Framework** is an offline-first, safety-gated automation and validation framework. It facilitates the end-to-end lifecycle of enterprise firewall replacements (e.g. Cisco ASA migrations to modern ASA or Firepower running ASA image) while guaranteeing that baseline security standards and operational rollback guardrails are rigorously enforced.
+The **Firewall Migration Framework** is an offline-first, safety-gated automation and validation framework. It facilitates the end-to-end lifecycle of enterprise firewall replacements (e.g. Cisco ASA migrations to modern ASA or Firepower running ASA image) while guaranteeing that baseline security standards and operational rollback guardrails are rigorously enforced.
 
 ```
                           +-------------------------------------------------------+
-                          |      Enterprise Firewall Migration & Audit Suite      |
+                          |            Firewall Migration & Audit Suite           |
                           +-------------------------------------------------------+
                                                      |
          +-------------------------------------------+-------------------------------------------+

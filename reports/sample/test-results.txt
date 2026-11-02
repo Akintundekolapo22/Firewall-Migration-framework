@@ -2,7 +2,7 @@
 CONSOLIDATED AUTOMATED TEST EXECUTION REPORT
 Timestamp   : 2026-10-31 14:20:22Z
 Environment : Offline Lab Test Environment
-Repository  : Enterprise-Firewall-Migration-Framework
+Repository  : Firewall-Migration-framework
 ================================================================================
 
 [SUITE 1] Python Pre-Migration Validator Unit Tests (tests/test_firewall_precheck.py)

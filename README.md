@@ -1,4 +1,4 @@
-# Enterprise Firewall Migration and Security Hardening Framework
+# Firewall Migration Framework
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -84,7 +84,7 @@ This framework standardizes the **Five-Phase Enterprise Firewall Migration Metho
 ## 3. Repository Directory Structure
 
 ```
-Enterprise-Firewall-Migration-Framework/
+Firewall-Migration-framework/
 │
 ├── README.md                               # Project summary, architecture, and complete operations guide
 ├── LICENSE                                 # MIT License
@@ -111,8 +111,8 @@ Enterprise-Firewall-Migration-Framework/
 │   │   └── ise-san-fix.md                  # Case study: Diagnosing EAP-TLS failure from SAN mismatch
 │   │
 │   └── articles/
-│       ├── 01-watchguard-to-cisco-migration.md        # Technical article for LinkedIn/Medium
-│       └── 02-cisco-ise-eap-tls-troubleshooting.md    # Technical article for LinkedIn/Medium
+│       ├── 01-watchguard-to-cisco-migration.md        # Technical article
+│       └── 02-cisco-ise-eap-tls-troubleshooting.md    # Technical article
 │
 ├── scripts/
 │   ├── asa-hardening-audit.sh              # Bash Cisco ASA audit tool (NIST & CIS aligned)
@@ -166,8 +166,8 @@ Enterprise-Firewall-Migration-Framework/
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/example-org/Enterprise-Firewall-Migration-Framework.git
-cd Enterprise-Firewall-Migration-Framework
+git clone https://github.com/Akintundekolapo22/Firewall-Migration-framework.git
+cd Firewall-Migration-framework
 
 # Install optional Python dependencies for extended schema/YAML parsing
 python -m pip install -r requirements.txt
@@ -318,7 +318,7 @@ For full test scenarios and execution outputs, see [`tests/test-results.md`](tes
 
 ## 9. Published Technical Articles
 
-Two publication-ready articles suitable for LinkedIn, Medium, or technical engineering blogs are included in the repository:
+Two publication-ready articles:
 1. **[Best Practices for Migrating Enterprise Firewalls from WatchGuard to Cisco ASA](docs/articles/01-watchguard-to-cisco-migration.md)**: Deep dive into architectural differences, zone trust models, identity NAT for VPNs, and migration checklists.
 2. **[Troubleshooting Cisco ISE EAP-TLS Authentication Failures Caused by Certificate Identity Mismatch](docs/articles/02-cisco-ise-eap-tls-troubleshooting.md)**: Root-cause analysis of Subject CN deprecation, ISE Certificate Authentication Profiles, and resolving failure code 22056.
 

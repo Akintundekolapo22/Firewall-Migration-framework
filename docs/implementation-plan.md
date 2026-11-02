@@ -1,4 +1,4 @@
-# Implementation Plan: Enterprise Firewall Migration and Security Hardening Framework
+# Implementation Plan: Firewall Migration Framework
 
 ## Overview
 This document tracks the phased delivery of the minimum viable enterprise firewall migration validation and security hardening framework. The project is structured across a 3-day timeline focusing on working, testable, secure, and maintainable deliverables.

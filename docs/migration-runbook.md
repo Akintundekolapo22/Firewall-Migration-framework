@@ -1,4 +1,4 @@
-# Enterprise Firewall Migration Runbook
+# Firewall Migration Runbook
 
 ## 1. Scope, Objectives and Assumptions
 

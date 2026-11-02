@@ -24,7 +24,7 @@ SKIPPED_SUITES=0
 START_TIME=$(date -u +"%Y-%m-%d %H:%M:%SZ")
 
 echo "================================================================================"
-echo "ENTERPRISE FIREWALL MIGRATION & HARDENING FRAMEWORK"
+echo "FIREWALL MIGRATION FRAMEWORK"
 echo "MASTER TEST EXECUTION RUNNER"
 echo "Start Time: ${START_TIME}"
 echo "================================================================================"
@@ -35,7 +35,7 @@ cat <<EOF > "${SUMMARY_FILE}"
 CONSOLIDATED AUTOMATED TEST EXECUTION REPORT
 Timestamp   : ${START_TIME}
 Environment : Offline Lab Test Environment
-Repository  : Enterprise-Firewall-Migration-Framework
+Repository  : Firewall-Migration-framework
 ================================================================================
 
 EOF

@@ -1,7 +1,7 @@
 # Troubleshooting Cisco ISE EAP-TLS Authentication Failures Caused by Certificate Identity Mismatch
 
 *Published by the Enterprise Cybersecurity & Identity Architecture Team*  
-*Reference Repository: [Enterprise-Firewall-Migration-Framework](https://github.com/example-org/Enterprise-Firewall-Migration-Framework)*
+*Reference Repository: [Firewall-Migration-framework](https://github.com/Akintundekolapo22/Firewall-Migration-framework)*
 
 ---
 
@@ -121,5 +121,5 @@ The session status will immediately transition to `Status: Authorized`, assignin
 2. **Standardize on SAN**: Never author or deploy new X.509 certificate templates relying solely on Subject CN. Enforce `SAN:DNS` for computer authentication and `SAN:UPN` for user authentication.
 3. **Stage PKI Changes**: Always test newly issued certificate templates against a dedicated lab ISE deployment before pushing certificate auto-enrollment Group Policies across enterprise endpoints.
 
-*For automated firewall validation scripts, zero trust configuration runbooks, and Cisco ASA hardening tools, visit our open-source [Enterprise Firewall Migration Framework](https://github.com/example-org/Enterprise-Firewall-Migration-Framework).*
+*For automated firewall validation scripts, zero trust configuration runbooks, and Cisco ASA hardening tools, visit our open-source [Firewall Migration Framework](https://github.com/Akintundekolapo22/Firewall-Migration-framework).*
 

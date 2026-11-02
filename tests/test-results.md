@@ -1,7 +1,7 @@
 # Automated Testing & Verification Evidence Report
 
 ## 1. Executive Summary
-This document provides empirical evidence of the validation and testing performed on the **Enterprise Firewall Migration and Security Hardening Framework**. All tools and workflows have been tested against simulated enterprise network scenarios using de-identified configurations and RFC 5737 reserved documentation addressing.
+This document provides empirical evidence of the validation and testing performed on the **Firewall Migration Framework**. All tools and workflows have been tested against simulated enterprise network scenarios using de-identified configurations and RFC 5737 reserved documentation addressing.
 
 ---
 

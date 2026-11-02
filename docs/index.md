@@ -1,7 +1,7 @@
-# Enterprise Firewall Migration and Security Hardening Framework
+# Firewall Migration Framework
 ## Technical Documentation Hub
 
-Welcome to the official documentation portal for the **Enterprise Firewall Migration and Security Hardening Framework**.
+Welcome to the official documentation portal for the **Firewall Migration Framework**.
 
 This open-source suite provides network security engineers, automation architects, and infrastructure administrators with standardized methodologies, automated validation tooling, security audit scripts, configuration templates, and troubleshooting playbooks.
 

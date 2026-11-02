@@ -1,4 +1,4 @@
-# Enterprise Firewall Migration Methodology
+# Firewall Migration Methodology
 
 ## Executive Summary
 This document establishes a standardized, five-phase enterprise methodology for migrating mission-critical perimeter and datacenter firewalls from legacy appliances (such as WatchGuard Firebox running Fireware OS) to modern enterprise firewall platforms (such as Cisco ASA 5500-X / Firepower appliances operating ASA software).
