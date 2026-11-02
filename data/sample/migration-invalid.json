@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.corp.example/schemas/v1/firewall-migration.json",
+  "schema_version": "1.0.0",
+  "migration_id": "MIG-2026-INVALID-TEST",
+  "source_firewall": {
+    "hostname": "fw-old.corp.example",
+    "vendor": "cisco",
+    "management_ip": "999.999.999.999"
+  },
+  "target_firewall": {
+    "hostname": "",
+    "vendor": "cisco",
+    "management_ip": "192.0.2.1"
+  },
+  "interfaces": [
+    {
+      "name": "GigabitEthernet0/0",
+      "nameif": "outside",
+      "ipv4_address": "203.0.113.2",
+      "cidr": 35
+    },
+    {
+      "name": "GigabitEthernet0/1",
+      "nameif": "inside",
+      "ipv4_address": "203.0.113.2",
+      "cidr": 24
+    }
+  ],
+  "routes": [
+    {
+      "interface": "outside",
+      "destination_prefix": "300.0.0.0/24",
+      "next_hop": "not-an-ip"
+    }
+  ],
+  "network_objects": [
+    {
+      "name": "obj-broken-range",
+      "type": "range",
+      "value": "192.0.2.200-192.0.2.100"
+    },
+    {
+      "name": "obj-duplicate",
+      "type": "host",
+      "value": "192.0.2.10"
+    },
+    {
+      "name": "obj-duplicate",
+      "type": "host",
+      "value": "192.0.2.20"
+    }
+  ],
+  "acls": [
+    {
+      "name": "OUTSIDE_IN",
+      "interface": "outside",
+      "direction": "in",
+      "rules": [
+        {
+          "action": "permit",
+          "protocol": "tcp",
+          "source_object": "obj-non-existent-source",
+          "destination_object": "obj-missing-target",
+          "destination_port": "80"
+        }
+      ]
+    }
+  ]
+}
+

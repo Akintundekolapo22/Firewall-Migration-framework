@@ -1,0 +1,7 @@
+# Python dependencies for Enterprise Firewall Migration and Security Hardening Framework
+# Core runtime is standard-library focused (Python 3.10+)
+# Optional libraries for extended schema validation and YAML parsing
+
+jsonschema>=4.20.0
+pyyaml>=6.0.1
+

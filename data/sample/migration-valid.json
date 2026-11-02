@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.corp.example/schemas/v1/firewall-migration.json",
+  "schema_version": "1.0.0",
+  "migration_id": "MIG-2026-HQ-EDGE-01",
+  "description": "Migration of Perimeter Gateway from Legacy Cisco ASA 5525-X to ASA 5555-X/FP2100",
+  "change_ticket": "CHG-0089214",
+  "source_firewall": {
+    "hostname": "fw-edge-legacy-01.corp.example",
+    "vendor": "cisco",
+    "model": "ASA-5525-X",
+    "os_version": "9.12(4)",
+    "management_ip": "192.0.2.254"
+  },
+  "target_firewall": {
+    "hostname": "fw-edge-target-01.corp.example",
+    "vendor": "cisco",
+    "model": "FPR-2110-ASA",
+    "os_version": "9.18(3)",
+    "management_ip": "192.0.2.253",
+    "total_physical_interfaces": 8
+  },
+  "interfaces": [
+    {
+      "name": "GigabitEthernet0/0",
+      "nameif": "outside",
+      "security_level": 0,
+      "ipv4_address": "203.0.113.2",
+      "cidr": 29,
+      "description": "Primary ISP Gateway Uplink"
+    },
+    {
+      "name": "GigabitEthernet0/1",
+      "nameif": "inside",
+      "security_level": 100,
+      "ipv4_address": "192.0.2.1",
+      "cidr": 24,
+      "description": "Internal Core Corporate LAN"
+    },
+    {
+      "name": "GigabitEthernet0/2",
+      "nameif": "dmz",
+      "security_level": 50,
+      "ipv4_address": "198.51.100.1",
+      "cidr": 24,
+      "description": "Demilitarized Public Services Zone"
+    },
+    {
+      "name": "GigabitEthernet0/3",
+      "nameif": "management",
+      "security_level": 100,
+      "ipv4_address": "192.0.2.253",
+      "cidr": 24,
+      "description": "Out-of-Band Management Network"
+    }
+  ],
+  "routes": [
+    {
+      "interface": "outside",
+      "destination_prefix": "0.0.0.0/0",
+      "next_hop": "203.0.113.1",
+      "metric": 1
+    },
+    {
+      "interface": "inside",
+      "destination_prefix": "192.0.2.128/25",
+      "next_hop": "192.0.2.2",
+      "metric": 10
+    },
+    {
+      "interface": "dmz",
+      "destination_prefix": "198.51.100.0/24",
+      "next_hop": "198.51.100.1",
+      "metric": 1
+    }
+  ],
+  "network_objects": [
+    {
+      "name": "obj-host-syslog-primary",
+      "type": "host",
+      "value": "192.0.2.50",
+      "description": "Corporate SIEM Collector"
+    },
+    {
+      "name": "obj-host-ise-primary",
+      "type": "host",
+      "value": "192.0.2.60",
+      "description": "Cisco ISE Identity Node"
+    },
+    {
+      "name": "obj-srv-web-dmz",
+      "type": "host",
+      "value": "198.51.100.10",
+      "description": "Public HTTPS Web Server"
+    },
+    {
+      "name": "obj-net-mgmt-bastion",
+      "type": "network",
+      "value": "192.0.2.64/27",
+      "description": "Secure Administration Bastion Subnet"
+    },
+    {
+      "name": "obj-range-client-pool",
+      "type": "range",
+      "value": "192.0.2.100-192.0.2.150",
+      "description": "Internal DHCP reservation pool"
+    }
+  ],
+  "acls": [
+    {
+      "name": "OUTSIDE_IN",
+      "interface": "outside",
+      "direction": "in",
+      "rules": [
+        {
+          "action": "permit",
+          "protocol": "tcp",
+          "source_object": "any",
+          "destination_object": "obj-srv-web-dmz",
+          "destination_port": "443"
+        },
+        {
+          "action": "deny",
+          "protocol": "ip",
+          "source_object": "any",
+          "destination_object": "any"
+        }
+      ]
+    },
+    {
+      "name": "MGMT_ACCESS",
+      "interface": "management",
+      "direction": "in",
+      "rules": [
+        {
+          "action": "permit",
+          "protocol": "tcp",
+          "source_object": "obj-net-mgmt-bastion",
+          "destination_object": "obj-host-ise-primary",
+          "destination_port": "1812"
+        }
+      ]
+    }
+  ]
+}
+

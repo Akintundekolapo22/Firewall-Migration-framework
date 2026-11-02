@@ -1,0 +1,220 @@
+{
+  "tool": "pre-migration-validator.py",
+  "version": "2.1.0",
+  "timestamp_utc": "2026-10-31T14:20:42.400498+00:00",
+  "input_file": "sample-firewall-rules.csv",
+  "total_rules_evaluated": 14,
+  "overall_status": "FAIL",
+  "migration_readiness": "NOT_READY_HIGH_RISK",
+  "summary": {
+    "total_findings": 20,
+    "critical_risks": 5,
+    "high_risks": 2,
+    "medium_risks": 4,
+    "low_risks": 9
+  },
+  "findings": [
+    {
+      "category": "SYNTAX_INTEGRITY",
+      "rule_id": "RULE-112",
+      "severity": "CRITICAL",
+      "title": "Malformed IP/CIDR Definition",
+      "description": "Invalid source address '192.0.2.0/35': '192.0.2.0/35' does not appear to be an IPv4 or IPv6 network",
+      "remediation": "Correct invalid subnet mask or IP string to RFC-compliant IPv4 format.",
+      "details": {}
+    },
+    {
+      "category": "POLICY_GOVERNANCE",
+      "rule_id": "RULE-113",
+      "severity": "LOW",
+      "title": "Missing Business Justification / Description",
+      "description": "Rule 'RULE-113' has no business justification or owner documentation.",
+      "remediation": "Add a descriptive explanation, change ticket ID, and application owner before migration.",
+      "details": {}
+    },
+    {
+      "category": "POLICY_GOVERNANCE",
+      "rule_id": "RULE-113",
+      "severity": "LOW",
+      "title": "Unnamed Firewall Rule",
+      "description": "Rule 'RULE-113' has no descriptive name identifier.",
+      "remediation": "Assign a standard naming convention (e.g., APP_DB_TIER_INGRESS).",
+      "details": {}
+    },
+    {
+      "category": "RULE_REDUNDANCY",
+      "rule_id": "RULE-104",
+      "severity": "MEDIUM",
+      "title": "Exact Duplicate Access Rule",
+      "description": "Rule 'RULE-104' is an exact duplicate of preceding rule 'RULE-103'.",
+      "remediation": "Decommission and remove rule 'RULE-104' to reduce rule base complexity.",
+      "details": {
+        "preceding_rule": "RULE-103"
+      }
+    },
+    {
+      "category": "RULE_OPTIMIZATION",
+      "rule_id": "RULE-104",
+      "severity": "MEDIUM",
+      "title": "Fully Shadowed Redundant Rule",
+      "description": "Rule 'RULE-104' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.",
+      "remediation": "Consolidate or delete rule 'RULE-104'.",
+      "details": {
+        "shadowing_rule": "RULE-103"
+      }
+    },
+    {
+      "category": "RULE_OPTIMIZATION",
+      "rule_id": "RULE-105",
+      "severity": "MEDIUM",
+      "title": "Fully Shadowed Redundant Rule",
+      "description": "Rule 'RULE-105' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.",
+      "remediation": "Consolidate or delete rule 'RULE-105'.",
+      "details": {
+        "shadowing_rule": "RULE-103"
+      }
+    },
+    {
+      "category": "POLICY_CONFLICT",
+      "rule_id": "RULE-106",
+      "severity": "HIGH",
+      "title": "Action Conflict Shadowed Rule",
+      "description": "Rule 'RULE-106' (deny) is masked by earlier rule 'RULE-103' (permit). The intended policy of 'RULE-106' will be silently overridden.",
+      "remediation": "Reorder rules: place specific rule 'RULE-106' above generic rule 'RULE-103'.",
+      "details": {
+        "conflicting_rule": "RULE-103"
+      }
+    },
+    {
+      "category": "RULE_OPTIMIZATION",
+      "rule_id": "RULE-114",
+      "severity": "MEDIUM",
+      "title": "Fully Shadowed Redundant Rule",
+      "description": "Rule 'RULE-114' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.",
+      "remediation": "Consolidate or delete rule 'RULE-114'.",
+      "details": {
+        "shadowing_rule": "RULE-103"
+      }
+    },
+    {
+      "category": "SECURITY_POSTURE",
+      "rule_id": "RULE-107",
+      "severity": "CRITICAL",
+      "title": "Unrestricted Permit Any-Any Rule",
+      "description": "Rule 'RULE-107' allows unrestricted IP traffic from ANY source to ANY destination across all ports.",
+      "remediation": "Replace with zero-trust microsegmentation rules specifying distinct network objects and destination ports.",
+      "details": {}
+    },
+    {
+      "category": "EXPOSURE_RISK",
+      "rule_id": "RULE-102",
+      "severity": "HIGH",
+      "title": "Sensitive Management Service Exposed: HTTP (Cleartext) (Port 80)",
+      "description": "Rule 'RULE-102' permits inbound access to sensitive service 'HTTP (Cleartext)' (port 80) from untrusted zone 'outside'.",
+      "remediation": "Block inbound port 80 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.",
+      "details": {
+        "exposed_port": 80,
+        "service": "HTTP (Cleartext)"
+      }
+    },
+    {
+      "category": "EXPOSURE_RISK",
+      "rule_id": "RULE-108",
+      "severity": "CRITICAL",
+      "title": "Sensitive Management Service Exposed: Telnet (Port 23)",
+      "description": "Rule 'RULE-108' permits inbound access to sensitive service 'Telnet' (port 23) from untrusted zone 'outside'.",
+      "remediation": "Block inbound port 23 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.",
+      "details": {
+        "exposed_port": 23,
+        "service": "Telnet"
+      }
+    },
+    {
+      "category": "EXPOSURE_RISK",
+      "rule_id": "RULE-109",
+      "severity": "CRITICAL",
+      "title": "Sensitive Management Service Exposed: RDP / Remote Desktop (Port 3389)",
+      "description": "Rule 'RULE-109' permits inbound access to sensitive service 'RDP / Remote Desktop' (port 3389) from untrusted zone 'outside'.",
+      "remediation": "Block inbound port 3389 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.",
+      "details": {
+        "exposed_port": 3389,
+        "service": "RDP / Remote Desktop"
+      }
+    },
+    {
+      "category": "EXPOSURE_RISK",
+      "rule_id": "RULE-110",
+      "severity": "CRITICAL",
+      "title": "Sensitive Management Service Exposed: SMB / Windows File Sharing (Port 445)",
+      "description": "Rule 'RULE-110' permits inbound access to sensitive service 'SMB / Windows File Sharing' (port 445) from untrusted zone 'outside'.",
+      "remediation": "Block inbound port 445 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.",
+      "details": {
+        "exposed_port": 445,
+        "service": "SMB / Windows File Sharing"
+      }
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-104",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-104' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-105",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-105' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-106",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-106' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-110",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-110' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-112",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-112' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-113",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-113' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    },
+    {
+      "category": "RULE_HYGIENE",
+      "rule_id": "RULE-114",
+      "severity": "LOW",
+      "title": "Zero Hit Count (Dormant Rule)",
+      "description": "Rule 'RULE-114' shows 0 recorded hits in firewall telemetry.",
+      "remediation": "Review rule with application owner. If obsolete, deprecate rule rather than migrating.",
+      "details": {}
+    }
+  ]
+}

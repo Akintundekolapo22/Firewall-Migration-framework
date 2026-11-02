@@ -1,0 +1,97 @@
+! ==============================================================================
+! Template: templates/bgp-prefix-list.template
+! Purpose: Enterprise BGP Routing, Prefix-List Filtering & Traffic Engineering
+! Standards Compliance: RFC 7454 (BGP Security), RFC 6996 (Private ASNs)
+! Note: Replace tokens marked with {{ TOKEN }} before deployment.
+! ==============================================================================
+
+! --- Ingress Bogon / Martian Prefix-List Filter ---
+! Rejects RFC 1918, RFC 5737 documentation blocks, loopbacks, and default route leaks from transit peers
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 10 permit 0.0.0.0/8 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 20 permit 10.0.0.0/8 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 30 permit 100.64.0.0/10 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 40 permit 127.0.0.0/8 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 50 permit 169.254.0.0/16 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 60 permit 172.16.0.0/12 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 70 permit 192.0.2.0/24 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 80 permit 192.168.0.0/16 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 90 permit 198.51.100.0/24 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 100 permit 203.0.113.0/24 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 110 permit 224.0.0.0/4 le 32
+ip prefix-list PL_INGRESS_BOGON_BLOCK seq 120 permit 240.0.0.0/4 le 32
+
+! --- Default Route Ingress Filter ---
+ip prefix-list PL_DEFAULT_ROUTE seq 10 permit 0.0.0.0/0
+
+! --- Outbound Advertised Enterprise Prefixes ---
+! Strictly limits outbound advertisements to enterprise-owned public allocations
+ip prefix-list PL_OUTBOUND_ADVERTISED seq 10 permit {{ PUBLIC_PREFIX_1 | default("203.0.113.0/24") }}
+ip prefix-list PL_OUTBOUND_ADVERTISED seq 20 permit {{ PUBLIC_PREFIX_2 | default("198.51.100.0/24") }}
+
+! --- Route-Maps for Ingress Traffic Policy (Local Preference) ---
+route-map RM_ISP_A_IN deny 10
+ description Filter bogons and private blocks from ISP-A
+ match ip address prefix-list PL_INGRESS_BOGON_BLOCK
+!
+route-map RM_ISP_A_IN permit 20
+ description Accept default route from Primary ISP-A with higher local preference
+ match ip address prefix-list PL_DEFAULT_ROUTE
+ set local-preference 200
+!
+route-map RM_ISP_B_IN deny 10
+ description Filter bogons and private blocks from Backup ISP-B
+ match ip address prefix-list PL_INGRESS_BOGON_BLOCK
+!
+route-map RM_ISP_B_IN permit 20
+ description Accept default route from Backup ISP-B with standard local preference
+ match ip address prefix-list PL_DEFAULT_ROUTE
+ set local-preference 100
+
+! --- Route-Maps for Egress Traffic Policy (AS-Path Prepending) ---
+route-map RM_ISP_A_OUT permit 10
+ description Advertise enterprise blocks to Primary ISP without prepending
+ match ip address prefix-list PL_OUTBOUND_ADVERTISED
+!
+route-map RM_ISP_B_OUT permit 10
+ description Advertise enterprise blocks to Backup ISP with 2x AS Path Prepending
+ match ip address prefix-list PL_OUTBOUND_ADVERTISED
+ set as-path prepend {{ LOCAL_ASN | default("64512") }} {{ LOCAL_ASN | default("64512") }}
+
+! --- Router BGP Process Configuration ---
+router bgp {{ LOCAL_ASN | default("64512") }}
+ bgp router-id {{ BGP_ROUTER_ID | default("203.0.113.2") }}
+ bgp log-neighbor-changes
+ bgp graceful-restart
+ no bgp default ipv4-unicast
+
+ address-family ipv4 unicast
+  ! Originate network advertisements
+  network 203.0.113.0 mask 255.255.255.0
+  network 198.51.100.0 mask 255.255.255.0
+
+  ! --- Primary Transit Uplink (ISP-A) ---
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} remote-as {{ PEER_ISP_A_ASN | default("64520") }}
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} description Primary WAN Transit ISP-A
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} password {{ BGP_MD5_AUTH_KEY_A }}
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} activate
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} route-map RM_ISP_A_IN in
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} route-map RM_ISP_A_OUT out
+  neighbor {{ PEER_ISP_A_IP | default("203.0.113.1") }} maximum-prefix 100 80 warning-only
+
+  ! --- Secondary Transit Uplink (ISP-B) ---
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} remote-as {{ PEER_ISP_B_ASN | default("64530") }}
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} description Backup WAN Transit ISP-B
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} password {{ BGP_MD5_AUTH_KEY_B }}
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} activate
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} route-map RM_ISP_B_IN in
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} route-map RM_ISP_B_OUT out
+  neighbor {{ PEER_ISP_B_IP | default("203.0.113.9") }} maximum-prefix 100 80 warning-only
+ exit-address-family
+
+! --- Operational Verification Commands ---
+! show bgp summary
+! show ip bgp neighbors
+! show ip bgp neighbors 203.0.113.1 received-routes
+! show ip bgp neighbors 203.0.113.1 advertised-routes
+! show ip route bgp
+

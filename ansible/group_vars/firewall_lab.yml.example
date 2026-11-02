@@ -1,0 +1,27 @@
+---
+# Example Group Variables for Lab Firewall Environment
+# Security Note: Sensitive variables should be encrypted with:
+#   ansible-vault encrypt_string '<secret>' --name 'vault_secret_name'
+
+firewall_environment: "lab"
+firewall_vendor: "cisco"
+firewall_os_type: "asa"
+
+# Safety Defaults for Lab Automation
+rollback_approved: false
+simulation_mode: true
+backup_file_path: "data/sample/backup.cfg"
+
+# Connectivity timeouts (conservative for slow lab links)
+ansible_connect_timeout: 30
+ansible_command_timeout: 30
+
+# Fictional Health Check Verification IPs (RFC 5737 Documentation Net)
+verification_ping_target: "192.0.2.1"
+syslog_server_target: "192.0.2.50"
+ise_tacacs_target: "192.0.2.60"
+
+# Change Tracking Metadata
+change_ticket_ref: "CHG-0089214-LAB"
+rollback_reason: "Automated regression testing failure or simulated recovery drill"
+

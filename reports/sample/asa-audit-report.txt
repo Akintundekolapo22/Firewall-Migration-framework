@@ -1,0 +1,72 @@
+================================================================================
+CISCO ASA SECURITY CONFIGURATION AUDIT REPORT
+================================================================================
+Timestamp   : 2026-10-31 14:20:54Z
+Target File : /c/Users/prita/OneDrive/Desktop/TEST/data/sample/asa-secure.cfg
+Audit Tool  : asa_security_audit.sh v1.2.0
+Execution   : Static Offline Text Parser
+================================================================================
+--------------------------------------------------------------------------------
+Check ID    : SEC-01 - Telnet Daemon & Access
+Status      : PASS | Severity: HIGH
+Finding     : No Telnet listener or access rules detected in configuration.
+Remediation : Maintain policy prohibiting Telnet.
+--------------------------------------------------------------------------------
+Check ID    : SEC-02 - SSH Management Access
+Status      : PASS | Severity: MEDIUM
+Finding     : SSH is restricted to designated subnets and strictly enforces version 2.
+Remediation : Ensure source subnets are audited regularly against bastion host allocations.
+--------------------------------------------------------------------------------
+Check ID    : SEC-03 - HTTP/ASDM Management Exposure
+Status      : PASS | Severity: LOW
+Finding     : HTTP/ASDM server is not enabled in configuration.
+Remediation : Continue using SSH/CLI or dedicated OOB management plane.
+--------------------------------------------------------------------------------
+Check ID    : SEC-04 - Syslog & Security Event Logging
+Status      : PASS | Severity: MEDIUM
+Finding     : Logging is enabled, forwarded to remote syslog collectors, and configured with timestamps.
+Remediation : Verify NTP synchronization across all syslog endpoints.
+--------------------------------------------------------------------------------
+Check ID    : SEC-05 - AAA Framework & Centralized Auth
+Status      : PASS | Severity: MEDIUM
+Finding     : AAA authentication policies and server groups are present with local fallback configuration.
+Remediation : Verify failover behavior when RADIUS/TACACS+ servers are unreachable.
+--------------------------------------------------------------------------------
+Check ID    : SEC-06 - Overly Permissive ACL Rules
+Status      : WARN | Severity: MEDIUM
+Finding     : Found rules permitting traffic from 'any' source to targeted destinations:\n55:access-list OUTSIDE_IN extended permit tcp any host 198.51.100.10 eq 443
+Remediation : Audit rules to ensure source addresses are restricted to expected partner or internal subnets where feasible.
+--------------------------------------------------------------------------------
+Check ID    : SEC-07 - Management Session Timeout
+Status      : PASS | Severity: LOW
+Finding     : Explicit console session timeout is configured: 85:console timeout 15
+Remediation : Maintain session timeout policy <= 15 minutes.
+--------------------------------------------------------------------------------
+Check ID    : SEC-08 - Unencrypted Credentials & Hashes
+Status      : PASS | Severity: HIGH
+Finding     : No plaintext 'enable password' or unencrypted username passwords detected.
+Remediation : Ensure 'password encryption aes' is enabled if storing local reversible keys.
+--------------------------------------------------------------------------------
+Check ID    : SEC-09 - Interface Security Isolation
+Status      : PASS | Severity: MEDIUM
+Finding     : Default interface boundary isolation is enforced (no global 'same-security-traffic permit').
+Remediation : Maintain strict separation between different zone trust tiers.
+--------------------------------------------------------------------------------
+Check ID    : SEC-10 - Manual Security Review Items
+Status      : INFO | Severity: LOW
+Finding     : Standard MPF inspection framework baseline detected.
+Remediation : Review application inspection settings (e.g., DNS, SIP, HTTP deep inspection) based on threat model.
+
+================================================================================
+AUDIT SUMMARY & METRICS
+================================================================================
+Total Evaluated Checks : 10
+Passed Checks          : 8
+Warnings (Review)      : 1
+Failures (High/Crit)   : 0
+Informational Items    : 1
+================================================================================
+OVERALL AUDIT OUTCOME  : [ WARN ]
+ASSESSMENT CONCLUSION  : AUDIT PASSED WITH WARNINGS. SECURITY IMPROVEMENTS RECOMMENDED.
+================================================================================
+

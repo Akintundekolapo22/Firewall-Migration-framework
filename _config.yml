@@ -1,0 +1,15 @@
+title: Enterprise Firewall Migration and Security Hardening Framework
+description: Open-Source Enterprise Firewall Migration, Security Hardening, Zero Trust & Automation Suite
+theme: jekyll-theme-cayman
+show_downloads: true
+google_analytics:
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - README.md
+  - LICENSE
+  - docs
+

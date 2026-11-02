@@ -1,0 +1,158 @@
+================================================================================
+CONSOLIDATED AUTOMATED TEST EXECUTION REPORT
+Timestamp   : 2026-10-31 14:20:22Z
+Environment : Offline Lab Test Environment
+Repository  : Enterprise-Firewall-Migration-Framework
+================================================================================
+
+[SUITE 1] Python Pre-Migration Validator Unit Tests (tests/test_firewall_precheck.py)
+test_cli_invalid_file_exit_code_two (tests.test_firewall_precheck.TestFirewallPrecheckCLI.test_cli_invalid_file_exit_code_two) ... ok
+test_cli_malformed_json_exit_code_one (tests.test_firewall_precheck.TestFirewallPrecheckCLI.test_cli_malformed_json_exit_code_one) ... ok
+test_cli_missing_file_exit_code_one (tests.test_firewall_precheck.TestFirewallPrecheckCLI.test_cli_missing_file_exit_code_one) ... ok
+test_cli_output_report_generation (tests.test_firewall_precheck.TestFirewallPrecheckCLI.test_cli_output_report_generation) ... ok
+test_cli_valid_file_exit_code_zero (tests.test_firewall_precheck.TestFirewallPrecheckCLI.test_cli_valid_file_exit_code_zero) ... ok
+test_duplicate_interface_ip (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_duplicate_interface_ip) ... ok
+test_hardware_capacity_exceeded (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_hardware_capacity_exceeded) ... ok
+test_invalid_device_identity (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_invalid_device_identity) ... ok
+test_invalid_interface_cidr (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_invalid_interface_cidr) ... ok
+test_invalid_route_destination (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_invalid_route_destination) ... ok
+test_invalid_route_next_hop (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_invalid_route_next_hop) ... ok
+test_missing_required_top_level_field (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_missing_required_top_level_field) ... ok
+test_network_object_duplicate (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_network_object_duplicate) ... ok
+test_network_object_inverted_range (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_network_object_inverted_range) ... ok
+test_strict_mode_treats_warning_as_failure (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_strict_mode_treats_warning_as_failure) ... ok
+test_undefined_acl_object_reference (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_undefined_acl_object_reference) ... ok
+test_unreachable_next_hop_emits_warning (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_unreachable_next_hop_emits_warning) ... ok
+test_valid_manifest_passes (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_valid_manifest_passes) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 1.713s
+
+OK
+>>> Status: PASSED (Exit Code: 0)
+--------------------------------------------------------------------------------
+[SUITE 2] Bash Cisco ASA Security Audit Test Suite (tests/test_asa_security_audit.sh)
+================================================================================
+RUNNING CISCO ASA SECURITY AUDIT TEST SUITE
+Target Script: /c/Users/prita/OneDrive/Desktop/TEST/scripts/asa_security_audit.sh
+================================================================================
+--- Test Group 1: Hardened Sample Evaluation ---
+  [PASS] Secure sample exit code should be 0
+  [PASS] Secure sample has 0 failures
+  [PASS] Telnet check passes
+--- Test Group 2: Insecure Sample Evaluation ---
+  [PASS] Insecure sample exit code should be 2 (FAIL)
+  [PASS] Insecure sample identifies high failures
+  [PASS] Telnet daemon failure detected
+  [PASS] Unrestricted SSH detected
+  [PASS] Permissive permit any rule flagged
+--- Test Group 3: Sensitive Secret Redaction ---
+  [PASS] Plaintext enable password must be redacted
+  [PASS] Plaintext user password must be redacted
+  [PASS] Redaction placeholder present
+--- Test Group 4: Input Validation & CLI Robustness ---
+  [PASS] Missing arguments exits with code 1
+  [PASS] Missing file exits with code 1
+  [PASS] Reports file does not exist
+  [PASS] Empty file exits with code 1
+  [PASS] Reports file is empty
+--- Test Group 5: Report File Generation ---
+  [PASS] Output report successfully generated at target path
+================================================================================
+BASH AUDIT TEST SUMMARY: 17 passed, 0 failed
+================================================================================
+>>> Status: PASSED (Exit Code: 0)
+--------------------------------------------------------------------------------
+[SUITE 3] Python CSV Policy Validator Test (scripts/pre-migration-validator.py)
+================================================================================
+PRE-MIGRATION FIREWALL VALIDATION REPORT: sample-firewall-rules.csv
+Readiness Decision : [ NOT_READY_HIGH_RISK ]
+Overall Status     : [ FAIL ]
+Total Rules Tested : 14
+Findings Summary   : 20 total | 5 critical | 2 high | 4 medium | 9 low
+================================================================================
+[CRITICAL] RULE-112: Malformed IP/CIDR Definition
+           Description : Invalid source address '192.0.2.0/35': '192.0.2.0/35' does not appear to be an IPv4 or IPv6 network
+           Remediation : Correct invalid subnet mask or IP string to RFC-compliant IPv4 format.
+[LOW]      RULE-113: Missing Business Justification / Description
+           Description : Rule 'RULE-113' has no business justification or owner documentation.
+           Remediation : Add a descriptive explanation, change ticket ID, and application owner before migration.
+[LOW]      RULE-113: Unnamed Firewall Rule
+           Description : Rule 'RULE-113' has no descriptive name identifier.
+           Remediation : Assign a standard naming convention (e.g., APP_DB_TIER_INGRESS).
+[MEDIUM]   RULE-104: Exact Duplicate Access Rule
+           Description : Rule 'RULE-104' is an exact duplicate of preceding rule 'RULE-103'.
+           Remediation : Decommission and remove rule 'RULE-104' to reduce rule base complexity.
+[MEDIUM]   RULE-104: Fully Shadowed Redundant Rule
+           Description : Rule 'RULE-104' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.
+           Remediation : Consolidate or delete rule 'RULE-104'.
+[MEDIUM]   RULE-105: Fully Shadowed Redundant Rule
+           Description : Rule 'RULE-105' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.
+           Remediation : Consolidate or delete rule 'RULE-105'.
+[HIGH]     RULE-106: Action Conflict Shadowed Rule
+           Description : Rule 'RULE-106' (deny) is masked by earlier rule 'RULE-103' (permit). The intended policy of 'RULE-106' will be silently overridden.
+           Remediation : Reorder rules: place specific rule 'RULE-106' above generic rule 'RULE-103'.
+[MEDIUM]   RULE-114: Fully Shadowed Redundant Rule
+           Description : Rule 'RULE-114' is completely shadowed by earlier rule 'RULE-103' with identical action (permit). Traffic will never hit this rule.
+           Remediation : Consolidate or delete rule 'RULE-114'.
+[CRITICAL] RULE-107: Unrestricted Permit Any-Any Rule
+           Description : Rule 'RULE-107' allows unrestricted IP traffic from ANY source to ANY destination across all ports.
+           Remediation : Replace with zero-trust microsegmentation rules specifying distinct network objects and destination ports.
+[HIGH]     RULE-102: Sensitive Management Service Exposed: HTTP (Cleartext) (Port 80)
+           Description : Rule 'RULE-102' permits inbound access to sensitive service 'HTTP (Cleartext)' (port 80) from untrusted zone 'outside'.
+           Remediation : Block inbound port 80 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.
+[CRITICAL] RULE-108: Sensitive Management Service Exposed: Telnet (Port 23)
+           Description : Rule 'RULE-108' permits inbound access to sensitive service 'Telnet' (port 23) from untrusted zone 'outside'.
+           Remediation : Block inbound port 23 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.
+[CRITICAL] RULE-109: Sensitive Management Service Exposed: RDP / Remote Desktop (Port 3389)
+           Description : Rule 'RULE-109' permits inbound access to sensitive service 'RDP / Remote Desktop' (port 3389) from untrusted zone 'outside'.
+           Remediation : Block inbound port 3389 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.
+[CRITICAL] RULE-110: Sensitive Management Service Exposed: SMB / Windows File Sharing (Port 445)
+           Description : Rule 'RULE-110' permits inbound access to sensitive service 'SMB / Windows File Sharing' (port 445) from untrusted zone 'outside'.
+           Remediation : Block inbound port 445 or route through VPN with multi-factor authentication (MFA) and dedicated bastion hosts.
+[LOW]      RULE-104: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-104' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-105: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-105' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-106: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-106' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-110: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-110' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-112: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-112' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-113: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-113' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+[LOW]      RULE-114: Zero Hit Count (Dormant Rule)
+           Description : Rule 'RULE-114' shows 0 recorded hits in firewall telemetry.
+           Remediation : Review rule with application owner. If obsolete, deprecate rule rather than migrating.
+
+Report saved successfully to: examples/migration-risk-report.json (Format: JSON)
+>>> Status: PASSED (Exit Code: 0)
+--------------------------------------------------------------------------------
+[SUITE 4] Cisco ASA Hardening Audit Tool (scripts/asa-hardening-audit.sh)
+Audit report saved successfully to: reports/sample/asa-hardening-report.json (Format: json)
+>>> Status: PASSED (Exit Code: 0)
+--------------------------------------------------------------------------------
+[SUITE 5] Ansible YAML Playbook & Checklist Syntax Verification
+ALL ANSIBLE PLAYBOOKS & CHECKLISTS PARSED SUCCESSFULLY WITHOUT SYNTAX ERRORS
+>>> Status: PASSED (Exit Code: 0)
+--------------------------------------------------------------------------------
+[SUITE 6] Ansible Playbook CLI Native Syntax Check: SKIPPED (CLI not found; verified via PyYAML)
+
+================================================================================
+MASTER TEST RUN SUMMARY
+================================================================================
+Total Test Suites   : 6
+Passed Suites       : 5
+Failed Suites       : 0
+Skipped Suites      : 1
+Completion Time     : 2026-10-31 14:20:55Z
+Overall Test Result : ALL CRITICAL TESTS PASSED
+================================================================================
+

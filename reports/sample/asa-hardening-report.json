@@ -1,0 +1,121 @@
+{
+  "tool": "asa-hardening-audit.sh",
+  "version": "2.1.0",
+  "timestamp_utc": "2026-10-31T14:20:46Z",
+  "target_file": "sample-asa-config.txt",
+  "overall_status": "WARN",
+  "summary": {
+    "total_checks": 10,
+    "passed": 8,
+    "warnings": 2,
+    "failures": 0,
+    "info": 0
+  },
+  "framework_alignments": [
+    "NIST SP 800-53 Rev. 5",
+    "CIS Cisco ASA Benchmark v4.1.0"
+  ],
+  "findings": [
+    {
+      "check_id": "ASA-AUD-01",
+      "name": "Insecure Telnet Management Service",
+      "status": "PASS",
+      "severity": "HIGH",
+      "nist_control": "NIST SP 800-53: CM-7, AC-17, SC-8",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.1.1",
+      "finding": "No Telnet listener or access rules detected. ",
+      "remediation": "Maintain policy prohibiting Telnet. "
+    },
+    {
+      "check_id": "ASA-AUD-02",
+      "name": "SSH Management Access Restrictions",
+      "status": "PASS",
+      "severity": "MEDIUM",
+      "nist_control": "NIST SP 800-53: AC-3, SC-8",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.2.1",
+      "finding": "SSH is restricted to designated subnets and enforces SSH version 2. ",
+      "remediation": "Audit authorized management subnet allocations periodically. "
+    },
+    {
+      "check_id": "ASA-AUD-03",
+      "name": "HTTP/ASDM Management Exposure",
+      "status": "PASS",
+      "severity": "LOW",
+      "nist_control": "NIST SP 800-53: CM-7",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.3.1",
+      "finding": "HTTP/ASDM server is disabled globally. ",
+      "remediation": "Maintain policy disabling unneeded web services. "
+    },
+    {
+      "check_id": "ASA-AUD-04",
+      "name": "Security Event Logging & SIEM Integration",
+      "status": "PASS",
+      "severity": "MEDIUM",
+      "nist_control": "NIST SP 800-53: AU-2, AU-8, AU-12",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 2.1.3",
+      "finding": "Logging is enabled, forwarded to remote syslog collectors, and configured with timestamps. ",
+      "remediation": "Ensure NTP synchronization is maintained across all syslog collectors. "
+    },
+    {
+      "check_id": "ASA-AUD-05",
+      "name": "SNMP Monitoring & Community Security",
+      "status": "WARN",
+      "severity": "MEDIUM",
+      "nist_control": "NIST SP 800-53: IA-5, SC-8",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.4.2",
+      "finding": "SNMP is configured using legacy v1/v2c community [REDACTED_COMMUNITY] without encrypted SNMPv3 users. ",
+      "remediation": "Upgrade to SNMPv3 with SHA authentication and AES encryption (authPriv). "
+    },
+    {
+      "check_id": "ASA-AUD-06",
+      "name": "Cryptographic Algorithms & TLS Protocols",
+      "status": "PASS",
+      "severity": "HIGH",
+      "nist_control": "NIST SP 800-53: SC-13, SC-28",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 3.1.1",
+      "finding": "No legacy DES, 3DES, RC4, MD5, or weak DH groups detected in crypto policies. ",
+      "remediation": "Maintain CNSA/NIST compliant cipher suites. "
+    },
+    {
+      "check_id": "ASA-AUD-07",
+      "name": "AAA Framework & Centralized Identity",
+      "status": "PASS",
+      "severity": "MEDIUM",
+      "nist_control": "NIST SP 800-53: IA-2, AC-2",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.5.1",
+      "finding": "Centralized AAA authentication policy and server groups defined with fallback. ",
+      "remediation": "Verify failover behavior when RADIUS/TACACS+ servers are unreachable. "
+    },
+    {
+      "check_id": "ASA-AUD-08",
+      "name": "Overly Permissive ACL Rules",
+      "status": "WARN",
+      "severity": "MEDIUM",
+      "nist_control": "NIST SP 800-53: AC-3, AC-4",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 4.1.2",
+      "finding": "Rules permitting traffic from 'any' source to targeted internal destinations:
+57:access-list OUTSIDE_IN extended permit tcp any host 198.51.100.10 eq 443 ",
+      "remediation": "Audit rules to ensure source addresses are restricted to expected partner or internal subnets. "
+    },
+    {
+      "check_id": "ASA-AUD-09",
+      "name": "Credential Storage & Password Encryption",
+      "status": "PASS",
+      "severity": "HIGH",
+      "nist_control": "NIST SP 800-53: IA-5",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.1.2",
+      "finding": "No unencrypted 'enable password' or plaintext username passwords detected. ",
+      "remediation": "Ensure 'password encryption aes' is active for local master keying. "
+    },
+    {
+      "check_id": "ASA-AUD-10",
+      "name": "Session Timeouts & MPF Inspection Baseline",
+      "status": "PASS",
+      "severity": "LOW",
+      "nist_control": "NIST SP 800-53: AC-11, AC-12, SI-4, SC-7",
+      "cis_benchmark": "CIS Cisco ASA Benchmark: 1.2.3",
+      "finding": "Explicit session timeouts configured; MPF inspection and security boundaries intact. ",
+      "remediation": "Maintain baseline security policy settings. "
+    }
+  ]
+}

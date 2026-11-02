@@ -1,0 +1,109 @@
+{
+  "tool": "firewall_precheck.py",
+  "version": "1.2.0",
+  "timestamp_utc": "2026-10-31T14:20:55.104567+00:00",
+  "input_file": "migration-valid.json",
+  "strict_mode": false,
+  "overall_status": "PASS",
+  "summary": {
+    "total_checks": 7,
+    "passed": 7,
+    "warnings": 0,
+    "failures": 0
+  },
+  "individual_checks": [
+    {
+      "check_id": "CHK-01",
+      "name": "Top-Level Schema Structure",
+      "status": "PASS",
+      "severity": "INFO",
+      "message": "All required top-level fields are present with correct data types.",
+      "details": {
+        "fields": [
+          "schema_version",
+          "migration_id",
+          "source_firewall",
+          "target_firewall",
+          "interfaces",
+          "routes",
+          "network_objects",
+          "acls"
+        ]
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-02",
+      "name": "Firewall Device Metadata",
+      "status": "PASS",
+      "severity": "LOW",
+      "message": "Source (fw-edge-legacy-01.corp.example) and Target (fw-edge-target-01.corp.example) metadata validated.",
+      "details": {
+        "source": "fw-edge-legacy-01.corp.example",
+        "target": "fw-edge-target-01.corp.example"
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-03",
+      "name": "Interface Addressing and CIDR",
+      "status": "PASS",
+      "severity": "INFO",
+      "message": "All 4 interfaces have valid unique IPv4 addresses and CIDR subnets.",
+      "details": {
+        "interface_count": 4,
+        "allocated_ips": [
+          "203.0.113.2",
+          "192.0.2.1",
+          "198.51.100.1",
+          "192.0.2.253"
+        ]
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-04",
+      "name": "Route Destinations and Next-Hops",
+      "status": "PASS",
+      "severity": "INFO",
+      "message": "All 3 routes validated successfully with reachable next-hops.",
+      "details": {
+        "route_count": 3
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-05",
+      "name": "Network Object Definitions",
+      "status": "PASS",
+      "severity": "INFO",
+      "message": "Validated 5 network objects without syntax or semantic errors.",
+      "details": {
+        "declared_count": 5
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-06",
+      "name": "ACL Object Reference Resolution",
+      "status": "PASS",
+      "severity": "INFO",
+      "message": "All object references across 2 ACLs (3 rules) resolve cleanly.",
+      "details": {
+        "acl_count": 2,
+        "rule_count": 3
+      },
+      "remediation": ""
+    },
+    {
+      "check_id": "CHK-07",
+      "name": "Source vs Target Hardware Consistency",
+      "status": "PASS",
+      "severity": "LOW",
+      "message": "Platform topology and interface mapping cross-checked successfully.",
+      "details": {},
+      "remediation": ""
+    }
+  ],
+  "remediation_recommendations": []
+}

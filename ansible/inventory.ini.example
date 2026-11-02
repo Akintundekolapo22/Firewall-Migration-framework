@@ -1,0 +1,19 @@
+# Example Inventory for Firewall Migration & Rollback
+# Security Rule: Never commit plaintext administrative credentials to this file!
+# Use Ansible Vault (ansible-vault) for sensitive variables.
+
+[firewalls]
+# Production Target (Fictional RFC 5737 IP)
+fw-edge-01.corp.example ansible_host=192.0.2.254 firewall_hostname=fw-edge-01.corp.example
+
+# Lab / Staging Appliance (Fictional RFC 5737 IP)
+fw-lab-01.corp.example  ansible_host=192.0.2.250 firewall_hostname=fw-lab-01.corp.example
+
+[firewalls:vars]
+ansible_connection=network_cli
+ansible_network_os=cisco.asa.asa
+ansible_user=netadmin
+# Store real credentials in encrypted vault file (group_vars/firewalls/vault.yml):
+# ansible_password="{{ vault_firewall_password }}"
+# ansible_become_password="{{ vault_firewall_enable_secret }}"
+

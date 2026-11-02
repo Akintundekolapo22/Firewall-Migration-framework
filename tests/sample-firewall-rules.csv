@@ -1,0 +1,16 @@
+rule_id,name,source_zone,dest_zone,source,destination,protocol,port,action,description,hit_count,last_hit_date,enabled
+RULE-101,DMZ_WEB_HTTPS_INGRESS,outside,dmz,any,198.51.100.10/32,tcp,443,permit,Public HTTPS inbound traffic to DMZ web server,145290,2026-10-28,true
+RULE-102,DMZ_WEB_HTTP_REDIRECT,outside,dmz,any,198.51.100.10/32,tcp,80,permit,Inbound HTTP port 80 for SSL redirect,84200,2026-10-28,true
+RULE-103,CORP_INTERNET_EGRESS,inside,outside,192.0.2.0/24,any,ip,any,permit,Corporate internal employee outbound web browsing,982340,2026-10-29,true
+RULE-104,EXACT_DUPLICATE_RULE,inside,outside,192.0.2.0/24,any,ip,any,permit,Accidentally duplicated rule from previous admin edit,0,2026-01-01,true
+RULE-105,SHADOWED_SPECIFIC_RULE,inside,outside,192.0.2.64/27,any,ip,any,permit,Specific subnet egress shadowed by broader RULE-103,0,2026-01-01,true
+RULE-106,ACTION_CONFLICT_RULE,inside,outside,192.0.2.128/28,any,ip,any,deny,Intended deny rule rendered unreachable because RULE-103 permits all 192.0.2.0/24,0,2026-01-01,true
+RULE-107,OVERLY_PERMISSIVE_ANY_ANY,guest,outside,any,any,ip,any,permit,Legacy wide-open guest access rule,45000,2026-10-25,true
+RULE-108,HIGH_RISK_TELNET_EXPOSURE,outside,inside,any,192.0.2.15/32,tcp,23,permit,Temporary insecure telnet rule for legacy vendor switch,12,2026-09-15,true
+RULE-109,HIGH_RISK_RDP_EXPOSURE,outside,inside,any,192.0.2.20/32,tcp,3389,permit,Emergency RDP access for external contractor,48,2026-10-01,true
+RULE-110,HIGH_RISK_SMB_EXPOSURE,outside,inside,any,192.0.2.25/32,tcp,445,permit,Accidental exposure of Windows SMB share to Internet,0,2026-01-01,true
+RULE-111,CORP_DB_INTERNAL_ACCESS,dmz,inside,198.51.100.10/32,192.0.2.70/32,tcp,3306,permit,DMZ application querying internal MySQL database,54120,2026-10-29,true
+RULE-112,MALFORMED_CIDR_RULE,inside,outside,192.0.2.0/35,any,tcp,443,permit,Rule with invalid subnet mask prefix greater than 32,0,2026-01-01,true
+RULE-113,,inside,dmz,192.0.2.10/32,198.51.100.50/32,tcp,22,permit,,0,2026-01-01,true
+RULE-114,DORMANT_ZERO_HIT_RULE,inside,outside,192.0.2.80/32,203.0.113.88/32,tcp,8443,permit,Retired staging portal rule with zero hits,0,2025-06-12,true
+

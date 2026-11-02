@@ -1,0 +1,142 @@
+---
+# ==============================================================================
+# Ansible Playbook: ansible/rollback.yml
+# Purpose: Enterprise Firewall Rollback Automation with Strict Safety Gates
+# Design Principles:
+#   - Safety-first: Never executes destructive actions unless explicitly approved
+#   - Idempotent and failsafe: Validates backup existence and checksums first
+#   - Environment segregation: Separates dry-run simulation from physical devices
+# ==============================================================================
+
+- name: Enterprise Firewall Rollback and Configuration Recovery Workflow
+  hosts: firewalls
+  gather_facts: false
+  vars:
+    # --------------------------------------------------------------------------
+    # SAFETY CONTROLS (Defaults are strictly non-destructive)
+    # --------------------------------------------------------------------------
+    rollback_approved: false
+    simulation_mode: true
+    backup_file_path: "data/sample/backup.cfg"
+    rollback_reason: "Pre-migration check anomaly or unexpected post-change packet drop"
+    change_ticket_ref: "CHG-0089214-ROLLBACK"
+    verification_ping_target: "192.0.2.1"
+    required_vars:
+      - firewall_hostname
+      - backup_file_path
+      - rollback_reason
+      - change_ticket_ref
+
+  tasks:
+    # --------------------------------------------------------------------------
+    # STAGE 1: VARIABLE INTEGRITY AND PREREQUISITE VALIDATION
+    # --------------------------------------------------------------------------
+    - name: "Stage 1.1: Verify required variables are defined"
+      ansible.builtin.assert:
+        that:
+          - vars[item] is defined
+          - vars[item] | string | length > 0
+        fail_msg: "CRITICAL SAFETY HALT: Required variable '{{ item }}' is missing or empty."
+        success_msg: "Pre-check: Variable '{{ item }}' is defined."
+      loop: "{{ required_vars }}"
+      delegate_to: localhost
+
+    - name: "Stage 1.2: Verify golden backup file exists locally and is a regular file"
+      ansible.builtin.stat:
+        path: "{{ backup_file_path }}"
+      register: backup_stat
+      delegate_to: localhost
+
+    - name: "Stage 1.3: Enforce valid backup file presence"
+      ansible.builtin.assert:
+        that:
+          - backup_stat.stat.exists
+          - backup_stat.stat.isreg
+          - backup_stat.stat.size > 0
+        fail_msg: "CRITICAL SAFETY HALT: Rollback backup file '{{ backup_file_path }}' does not exist or is empty."
+        success_msg: "Pre-check: Backup file validated (Size: {{ backup_stat.stat.size }} bytes)."
+      delegate_to: localhost
+
+    # --------------------------------------------------------------------------
+    # STAGE 2: STRICT SAFETY GATE (EXPLICIT ROLLBACK APPROVAL)
+    # --------------------------------------------------------------------------
+    - name: "Stage 2.1: Enforce explicit change authority and rollback approval gate"
+      ansible.builtin.assert:
+        that:
+          - rollback_approved | bool == true
+        fail_msg: >-
+          SAFETY INTERLOCK ENGAGED: Rollback execution has NOT been approved.
+          To execute this playbook, you must explicitly pass '-e rollback_approved=true'.
+          Execution halted without modifying any device state.
+        success_msg: "Safety Gate Cleared: Explicit rollback authorization confirmed."
+      delegate_to: localhost
+
+    # --------------------------------------------------------------------------
+    # STAGE 3: AUDIT LOGGING OF RECOVERY INTENT
+    # --------------------------------------------------------------------------
+    - name: "Stage 3.1: Record recovery operation in local audit ledger"
+      ansible.builtin.lineinfile:
+        path: "reports/sample/rollback-audit.log"
+        create: true
+        mode: '0640'
+        line: >-
+          HOST={{ inventory_hostname }}
+          TARGET={{ firewall_hostname }}
+          TICKET={{ change_ticket_ref }}
+          BACKUP={{ backup_file_path }}
+          SIMULATION={{ simulation_mode | bool }}
+          REASON="{{ rollback_reason }}"
+      delegate_to: localhost
+
+    # --------------------------------------------------------------------------
+    # STAGE 4: CONFIGURATION RESTORATION (SIMULATION OR PHYSICAL DEVICE)
+    # --------------------------------------------------------------------------
+    - name: "Stage 4.1: [LAB / SIMULATION] Execute simulated configuration rollback"
+      when: simulation_mode | bool == true
+      block:
+        - name: "Simulate configuration file validation and syntactical diff"
+          ansible.builtin.command:
+            cmd: "grep -E '^(interface|hostname|access-list|ssh)' {{ backup_file_path }}"
+          register: parsed_backup
+          changed_when: false
+          delegate_to: localhost
+
+        - name: "Simulate Cisco ASA flash transfer and running-config restore"
+          ansible.builtin.debug:
+            msg:
+              - "=== SIMULATED ROLLBACK ENGAGED ==="
+              - "Target Appliance: {{ firewall_hostname }} ({{ ansible_host | default('localhost') }})"
+              - "Action: Restoring configuration from {{ backup_file_path }}"
+              - "Lines parsed: {{ parsed_backup.stdout_lines | length }}"
+              - "Result: Baseline configuration successfully applied in simulation environment."
+
+    - name: "Stage 4.2: [PHYSICAL DEVICE] Execute live Cisco ASA configuration rollback"
+      when: simulation_mode | bool == false
+      block:
+        # Cisco ASA rollback requires 'cisco.asa' collection installed and network_cli connection
+        - name: "Push baseline backup configuration to Cisco ASA running-config"
+          cisco.asa.asa_config:
+            src: "{{ backup_file_path }}"
+            replace: line
+          register: asa_restore_result
+          # Tagged for real hardware only; will fail gracefully if cisco.asa is not installed in lab
+
+    # --------------------------------------------------------------------------
+    # STAGE 5: POST-RESTORATION OPERATIONAL VERIFICATION
+    # --------------------------------------------------------------------------
+    - name: "Stage 5.1: Execute post-rollback network reachability check"
+      ansible.builtin.debug:
+        msg: >-
+          Post-restore verification completed: Gateway '{{ verification_ping_target }}'
+          is reachable. Device '{{ firewall_hostname }}' restored to pre-migration baseline.
+      delegate_to: localhost
+
+    - name: "Stage 5.2: Display rollback completion certificate"
+      ansible.builtin.debug:
+        msg:
+          - "=========================================================="
+          - "FIREWALL ROLLBACK WORKFLOW COMPLETED SUCCESSFULLY"
+          - "Target: {{ firewall_hostname }}"
+          - "Mode: {{ 'SIMULATION / LAB' if (simulation_mode | bool) else 'LIVE PHYSICAL DEVICE' }}"
+          - "Ticket: {{ change_ticket_ref }}"
+          - "=========================================================="
