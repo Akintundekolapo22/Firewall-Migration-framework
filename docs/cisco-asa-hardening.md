@@ -1,5 +1,10 @@
 # Cisco ASA Security Hardening Guide
 
+## Overview
+This engineering guide provides practitioner-oriented security configuration baselines for Cisco ASA 5500-X and Firepower appliances operating ASA software, directly supporting Module 3 of the Firewall Migration Framework. Security controls and configuration recommendations are mapped to **NIST SP 800-53 Rev. 5** and the **CIS Cisco ASA Benchmark v4.1.0**, establishing reproducible, audit-ready security baselines for enterprise firewall modernization.
+
+---
+
 ## 1. Management Plane Security
 
 The management plane represents the primary target for malicious persistence and administrative interception. Hardening the management plane ensures that control traffic is strictly isolated from tenant and transit data planes.

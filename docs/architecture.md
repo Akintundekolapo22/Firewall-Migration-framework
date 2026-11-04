@@ -2,7 +2,7 @@
 
 ## 1. Architectural Overview
 
-The **Firewall Migration Framework** is an offline-first, safety-gated automation and validation framework. It facilitates the end-to-end lifecycle of enterprise firewall replacements (e.g. Cisco ASA migrations to modern ASA or Firepower running ASA image) while guaranteeing that baseline security standards and operational rollback guardrails are rigorously enforced.
+The **Firewall Migration Framework** is an open-source, practitioner-oriented cybersecurity implementation framework designed to support secure enterprise network modernization through structured migration methodologies, configuration security assessments, automated firewall policy validation, and documented rollback procedures. It operates offline-first with safety-gated validation workflows to address implementation-stage security and operational challenges during enterprise firewall replacements while guaranteeing that baseline security standards and operational rollback guardrails are rigorously enforced.
 
 ```
                           +-------------------------------------------------------+

@@ -1,7 +1,7 @@
 {
   "tool": "pre-migration-validator.py",
   "version": "2.1.0",
-  "timestamp_utc": "2026-10-31T14:20:42.400498+00:00",
+  "timestamp_utc": "2026-11-03T06:55:41.765238+00:00",
   "input_file": "sample-firewall-rules.csv",
   "total_rules_evaluated": 14,
   "overall_status": "FAIL",

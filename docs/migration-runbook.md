@@ -3,10 +3,11 @@
 ## 1. Scope, Objectives and Assumptions
 
 ### 1.1 Scope
-This runbook governs the planned cutover of perimeter and data center firewalls from legacy hardware (e.g., Cisco ASA 5500-X series) to target appliances (e.g., Cisco Firepower FPR-2100 running ASA image or refreshed ASA platforms).
+This runbook provides practitioner-oriented operational guidance and structured templates for governing the planned cutover of perimeter and data center firewalls from legacy hardware (such as Cisco ASA 5500-X series or WatchGuard Firebox) to target enterprise platforms (e.g., Cisco Firepower FPR-2100 running ASA image or refreshed ASA platforms). It utilizes standardized RFC 5737 documentation addressing and structured verification procedures to ensure operational continuity and rollback readiness.
 
 ### 1.2 Assumptions & Prerequisites
-- All migration manifests have passed automated offline semantic validation (`scripts/firewall_precheck.py`).
+- All migration manifests and rule bases have passed automated offline semantic validation (`scripts/firewall_precheck.py` and `scripts/pre-migration-validator.py`).
+- All configurations, templates, and failover steps have been validated in an isolated staging or lab environment prior to live deployment.
 - Target appliances are racked, cabled, power-tested, and reachable over an out-of-band management network.
 - Target firmware versions match enterprise approved release baselines (e.g., ASA 9.18.x Interims).
 - The maintenance window has been formally approved by the Change Advisory Board (CAB).

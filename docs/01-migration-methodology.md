@@ -1,7 +1,7 @@
 # Firewall Migration Methodology
 
 ## Executive Summary
-This document establishes a standardized, five-phase enterprise methodology for migrating mission-critical perimeter and datacenter firewalls from legacy appliances (such as WatchGuard Firebox running Fireware OS) to modern enterprise firewall platforms (such as Cisco ASA 5500-X / Firepower appliances operating ASA software).
+The Firewall Migration Methodology establishes a structured, practitioner-oriented five-phase methodology for enterprise network modernization and firewall transitions (such as migrating legacy WatchGuard Firebox or earlier Cisco ASA platforms to modern enterprise firewall environments). It emphasizes traceable implementation decisions, repeatable verification activities, and improved security governance across all stages of migration.
 
 ---
 
@@ -13,11 +13,11 @@ This document establishes a standardized, five-phase enterprise methodology for 
 +---------------------------------------------------------------------------------------------------------+
        |
        v
-[ Phase 1: Discovery & Assessment ]
+[ Phase 1: Network Discovery & Assessment ]
   -> Interface topologies, VLAN tagging, static/dynamic routes, IPsec VPN tunnels, NAT translation rules.
        |
        v
-[ Phase 2: Policy Review & Optimization ]
+[ Phase 2: Policy Review & Migration Planning ]
   -> Rule base rationalization, shadow rule elimination, dead object pruning, zero-trust mapping.
        |
        v
@@ -25,7 +25,7 @@ This document establishes a standardized, five-phase enterprise methodology for 
   -> Translation to Cisco ASA syntax, offline semantic validation, CIDR checks, automated schema pre-check.
        |
        v
-[ Phase 4: Deployment, Cutover & Verification ]
+[ Phase 4: Deployment, Migration & Verification ]
   -> Maintenance window execution, interface cutover, BGP convergence, progressive 5-layer verification.
        |
        v
@@ -35,7 +35,7 @@ This document establishes a standardized, five-phase enterprise methodology for 
 
 ---
 
-### Phase 1: Network Discovery and Infrastructure Assessment
+### Phase 1: Network Discovery and Assessment
 
 #### 1.1 Physical and Logical Topology Mapping
 - Document all physical interfaces, speeds, duplex, and medium (Copper RJ-45 vs. Multi-Mode/Single-Mode SFP+ transceivers).
@@ -55,7 +55,7 @@ This document establishes a standardized, five-phase enterprise methodology for 
 
 ---
 
-### Phase 2: Security Policy Review and Migration Planning
+### Phase 2: Policy Review and Migration Planning
 
 #### 2.1 Rule Base Normalization
 Legacy firewall policies accumulate years of temporary permits, obsolete vendors, and duplicate rules. Prior to migration:
@@ -73,7 +73,7 @@ Establish uniform object naming:
 
 ---
 
-### Phase 3: Configuration Development and Pre-Migration Validation
+### Phase 3: Configuration and Pre-Migration Validation
 
 #### 3.1 Automated Pre-Migration Policy Validation
 Run `scripts/pre-migration-validator.py` against the exported CSV policy set to detect:
@@ -99,7 +99,7 @@ bash scripts/asa-hardening-audit.sh -i templates/asa-baseline.conf -f json -o re
 
 ---
 
-### Phase 4: Firewall Deployment, Migration, and Verification
+### Phase 4: Deployment, Migration, and Verification
 
 #### 4.1 Maintenance Window Sequence (T-0 to T+90 minutes)
 
@@ -118,7 +118,7 @@ bash scripts/asa-hardening-audit.sh -i templates/asa-baseline.conf -f json -o re
 
 ---
 
-### Phase 5: Post-Migration Monitoring, Documentation, and Rollback Readiness
+### Phase 5: Post-Migration Monitoring and Rollback Readiness
 
 #### 5.1 72-Hour Burn-in Monitoring
 - Monitor interface error counters (CRC, frame errors, overruns): `show interface GigabitEthernet0/0 | grep error`.

@@ -1,6 +1,6 @@
 ================================================================================
 CONSOLIDATED AUTOMATED TEST EXECUTION REPORT
-Timestamp   : 2026-10-31 14:20:22Z
+Timestamp   : 2026-11-03 06:55:28Z
 Environment : Offline Lab Test Environment
 Repository  : Firewall-Migration-framework
 ================================================================================
@@ -26,7 +26,7 @@ test_unreachable_next_hop_emits_warning (tests.test_firewall_precheck.TestFirewa
 test_valid_manifest_passes (tests.test_firewall_precheck.TestFirewallPrecheckValidator.test_valid_manifest_passes) ... ok
 
 ----------------------------------------------------------------------
-Ran 18 tests in 1.713s
+Ran 18 tests in 1.158s
 
 OK
 >>> Status: PASSED (Exit Code: 0)
@@ -152,7 +152,7 @@ Total Test Suites   : 6
 Passed Suites       : 5
 Failed Suites       : 0
 Skipped Suites      : 1
-Completion Time     : 2026-10-31 14:20:55Z
+Completion Time     : 2026-11-03 06:55:49Z
 Overall Test Result : ALL CRITICAL TESTS PASSED
 ================================================================================
 

@@ -1,9 +1,9 @@
 # Firewall Migration Framework
 ## Technical Documentation Hub
 
-Welcome to the official documentation portal for the **Firewall Migration Framework**.
+Welcome to the official documentation portal for the **Firewall Migration Framework**, an open-source, practitioner-oriented cybersecurity implementation framework designed to support secure enterprise network modernization through structured migration methodologies, configuration security assessments, automated firewall policy validation, and documented rollback procedures.
 
-This open-source suite provides network security engineers, automation architects, and infrastructure administrators with standardized methodologies, automated validation tooling, security audit scripts, configuration templates, and troubleshooting playbooks.
+The framework provides publicly accessible technical documentation, automation scripts, configuration templates, and implementation guidance that security professionals can review, evaluate, and adapt to their own environments.
 
 ---
 
@@ -42,5 +42,6 @@ This open-source suite provides network security engineers, automation architect
 #### Module 7: Testing, Assurance & Evidence
 - [Empirical Test Results & Execution Evidence](../tests/test-results.md)
 - [System Architecture Specification](architecture.md)
-- [Testing Scope & Environmental Limitations](testing-and-limitations.md)
+- [Testing Documentation, Environmental Scope & Known Limitations](testing-and-limitations.md)
+- [Project Overview & Future Development Roadmap](../README.md#future-development-roadmap)
 

@@ -1,5 +1,10 @@
 # Zero Trust Access Playbook: Identity-Based Network Access Control
 
+## Executive Summary
+This playbook provides practitioner-oriented architecture and troubleshooting guidance for implementing identity-based network access controls within the Firewall Migration Framework (Module 2). Aligned with NIST SP 800-207 Zero Trust Architecture principles, it details the interaction between Policy Decision Points (Cisco ISE 3.x), Policy Enforcement Points (Cisco ASA and switches), 802.1X supplicants, and modern PKI certificate validation.
+
+---
+
 ## 1. Zero Trust Architecture and Cisco ISE
 
 Zero Trust Network Architecture (ZTNA, NIST SP 800-207) asserts that no endpoint, user, or device inside or outside the enterprise perimeter should be granted implicit trust. Cisco Identity Services Engine (ISE) serves as the centralized **Policy Decision Point (PDP)**, dynamically evaluating identity, device posture, and context before instructing **Policy Enforcement Points (PEPs)** (such as Cisco ASA firewalls, Catalyst switches, and Wireless LAN Controllers) to grant least-privilege network access.

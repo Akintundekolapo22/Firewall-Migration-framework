@@ -6,36 +6,110 @@
 [![NIST SP 800-53](https://img.shields.io/badge/NIST%20SP-800--53%20Rev.%205-red.svg)](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
 [![CIS Benchmark](https://img.shields.io/badge/CIS%20Benchmark-Cisco%20ASA%20v4.1.0-darkgreen.svg)](https://www.cisecurity.org/)
 
-An enterprise-grade, offline-first engineering framework designed for validating firewall migrations, executing security hardening audits mapped to NIST SP 800-53 and CIS Benchmarks, implementing Zero Trust Network Architecture with Cisco ISE, and conducting safety-gated rollback automations.
+The Firewall Migration Framework is an open-source, practitioner-oriented cybersecurity implementation framework designed to support secure enterprise network modernization through structured migration methodologies, configuration security assessments, automated firewall policy validation, and documented rollback procedures.
 
-Designed for network security engineers, cybersecurity professionals, and automation specialists executing high-risk infrastructure modernizations (including migrating legacy WatchGuard Firebox or older Cisco ASA deployments to refreshed platforms).
+The framework addresses implementation-stage security and operational challenges that can arise when organizations migrate legacy firewall infrastructure, strengthen network access controls, and modernize enterprise security architectures.
+
+It combines reusable technical methodologies, automation scripts, security configuration templates, and troubleshooting documentation to support more consistent, repeatable, and auditable network security implementation practices.
+
+The framework is intended for network security engineers, cybersecurity architects, infrastructure administrators, and governance professionals. Its methods may be applicable to healthcare, critical manufacturing, and other critical infrastructure environments where secure network transitions and operational continuity are essential.
+
+---
+
+<a id="research-and-technical-objectives"></a>
+## Research and Technical Objectives
+
+The primary objective of the Firewall Migration Framework is to translate enterprise network security implementation experience into structured, reusable technical methodologies and automation resources.
+
+The framework focuses on reducing the gap between high-level cybersecurity standards, vendor-specific implementation guidance, and the practical requirements of enterprise network modernization.
+
+Its technical objectives include:
+
+- Establishing a repeatable five-phase enterprise firewall migration methodology.
+- Supporting pre-migration security assessments through automated configuration and firewall policy analysis.
+- Identifying potentially insecure configurations, duplicate or shadowed rules, overly permissive access policies, and other migration-related risks.
+- Providing structured implementation and verification procedures to support operational continuity.
+- Documenting rollback readiness and recovery procedures for controlled infrastructure transitions.
+- Supporting identity-based network security implementation through Cisco ISE, 802.1X, and EAP-TLS troubleshooting guidance.
+- Disseminating reusable technical knowledge and implementation resources to the network security practitioner community.
+
+These objectives support continued technical evaluation, refinement, and dissemination of practitioner-oriented cybersecurity implementation methodologies.
+
+---
+
+<a id="intended-users-and-critical-infrastructure-applications"></a>
+## Intended Users and Critical Infrastructure Applications
+
+The Firewall Migration Framework is designed for cybersecurity practitioners responsible for implementing and maintaining secure enterprise network infrastructure.
+
+Primary intended users include network security engineers, enterprise security architects, infrastructure administrators, and cybersecurity governance professionals.
+
+Potential application environments include:
+
+- **Healthcare and Public Health**: Network environments where security, availability, access controls, and operational continuity are important.
+- **Critical Manufacturing**: Distributed enterprise and manufacturing networks requiring secure firewall transitions, controlled access, and reliable connectivity.
+- **Other Critical Infrastructure Sectors**: Enterprise environments facing comparable firewall modernization, security configuration, and migration governance challenges.
+
+The framework is designed to be reusable and adaptable across different organizational environments. Actual deployment suitability depends on the network architecture, security requirements, platform compatibility, and validation performed by the implementing organization.
+
+---
+
+<a id="open-source-dissemination-and-research-alignment"></a>
+## Open-Source Dissemination and Research Alignment
+
+The Firewall Migration Framework contributes to the broader objective of developing and disseminating practitioner-oriented cybersecurity implementation methodologies.
+
+The project provides publicly accessible technical documentation, automation scripts, configuration templates, and implementation guidance that security professionals can review, evaluate, and adapt to their own environments.
+
+Its development emphasizes practical implementation methods rather than the creation of proprietary firewall technologies.
+
+The framework supports continued technical validation, documentation, and refinement of enterprise network modernization practices, with particular attention to security hardening, operational resilience, identity-based access controls, and controlled infrastructure transitions.
+
+The repository serves as a practical technical resource that can complement published research and professional cybersecurity implementation guidance.
 
 ---
 
 ## Table of Contents
-1. [Framework Overview & Five-Phase Lifecycle](#1-framework-overview--five-phase-lifecycle)
-2. [Module Architecture & Deliverables](#2-module-architecture--deliverables)
-3. [Repository Directory Structure](#3-repository-directory-structure)
-4. [Prerequisites & Environment Setup](#4-prerequisites--environment-setup)
-5. [Automated Tools Execution Guide](#5-automated-tools-execution-guide)
+- [Research and Technical Objectives](#research-and-technical-objectives)
+- [Intended Users and Critical Infrastructure Applications](#intended-users-and-critical-infrastructure-applications)
+- [Open-Source Dissemination and Research Alignment](#open-source-dissemination-and-research-alignment)
+1. [Implementation Methodology and Security Governance](#implementation-methodology-and-security-governance)
+2. [Module Architecture & Deliverables](#module-architecture-and-deliverables)
+3. [Repository Directory Structure](#repository-directory-structure)
+4. [Prerequisites & Environment Setup](#prerequisites-and-environment-setup)
+5. [Automated Tools Execution Guide](#automated-tools-execution-guide)
    - [A. Cisco ASA Security Hardening Audit Tool (`asa-hardening-audit.sh`)](#a-cisco-asa-security-hardening-audit-tool)
-   - [B. Pre-Migration Policy & Risk Validator (`pre-migration-validator.py`)](#b-pre-migration-policy--risk-validator)
-   - [C. Automated Rollback Workflow & Safety Checklist (`rollback-checklist.yml`)](#c-automated-rollback-workflow--safety-checklist)
-6. [Zero Trust Identity & Cisco ISE EAP-TLS Integration](#6-zero-trust-identity--cisco-ise-eap-tls-integration)
-7. [Reusable Security Configuration Templates](#7-reusable-security-configuration-templates)
-8. [Automated Testing & Empirical Evidence](#8-automated-testing--empirical-evidence)
-9. [Published Technical Articles](#9-published-technical-articles)
-10. [Security Safeguards & Privacy Standards](#10-security-safeguards--privacy-standards)
-11. [Supported vs. Unsupported Environments](#11-supported-vs-unsupported-environments)
-12. [Known Limitations](#12-known-limitations)
-13. [Engineering Troubleshooting Guide](#13-engineering-troubleshooting-guide)
-14. [Engineering Disclaimer](#14-engineering-disclaimer)
+   - [B. Pre-Migration Policy & Risk Validator (`pre-migration-validator.py`)](#b-pre-migration-policy-and-risk-validator)
+   - [C. Automated Rollback Workflow & Safety Checklist (`rollback-checklist.yml`)](#c-automated-rollback-workflow-and-safety-checklist)
+6. [Zero Trust Identity & Cisco ISE EAP-TLS Integration](#zero-trust-identity-and-cisco-ise-eap-tls-integration)
+7. [Reusable Security Configuration Templates](#reusable-security-configuration-templates)
+8. [Automated Testing & Empirical Evidence](#automated-testing-and-empirical-evidence)
+9. [Published Technical Articles](#published-technical-articles)
+10. [Security Safeguards & Privacy Standards](#security-safeguards-and-privacy-standards)
+11. [Supported vs. Unsupported Environments](#supported-vs-unsupported-environments)
+12. [Known Limitations](#known-limitations)
+13. [Future Development Roadmap](#future-development-roadmap)
+14. [Engineering Troubleshooting Guide](#engineering-troubleshooting-guide)
+15. [Engineering Disclaimer](#engineering-disclaimer)
 
 ---
 
-## 1. Framework Overview & Five-Phase Lifecycle
+<a id="implementation-methodology-and-security-governance"></a>
+## 1. Implementation Methodology and Security Governance
 
-Perimeter and datacenter firewall cutovers carry significant operational and security risks. Undetected syntax anomalies, unresolvable address objects, shadow access rules, and legacy unencrypted services can lead to service downtime or security exposures.
+The framework applies a structured five-phase firewall migration lifecycle:
+
+Phase 1 — Network Discovery and Assessment: Identify network dependencies, firewall interfaces, routing configurations, security policies, NAT rules, VPN connectivity, and operational requirements.
+
+Phase 2 — Policy Review and Migration Planning: Evaluate existing firewall policies, identify unnecessary or potentially insecure rules, document dependencies, and establish migration readiness criteria.
+
+Phase 3 — Configuration and Pre-Migration Validation: Apply automated policy validation and configuration security assessments to identify issues requiring remediation before deployment.
+
+Phase 4 — Deployment, Migration, and Verification: Execute controlled migration activities and verify connectivity, routing, security policy enforcement, and critical application functionality.
+
+Phase 5 — Post-Migration Monitoring and Rollback Readiness: Monitor operational stability, review security logging, validate expected network behavior, and maintain documented recovery procedures.
+
+The methodology is intended to support traceable implementation decisions, repeatable verification activities, and improved security governance during enterprise firewall modernization.
 
 This framework standardizes the **Five-Phase Enterprise Firewall Migration Methodology** ([`docs/01-migration-methodology.md`](docs/01-migration-methodology.md)):
 
@@ -67,6 +141,7 @@ This framework standardizes the **Five-Phase Enterprise Firewall Migration Metho
 
 ---
 
+<a id="module-architecture-and-deliverables"></a>
 ## 2. Module Architecture & Deliverables
 
 | Module | Core Deliverables | Technology | Scope & Functionality |
@@ -81,6 +156,7 @@ This framework standardizes the **Five-Phase Enterprise Firewall Migration Metho
 
 ---
 
+<a id="repository-directory-structure"></a>
 ## 3. Repository Directory Structure
 
 ```
@@ -155,6 +231,7 @@ Firewall-Migration-framework/
 
 ---
 
+<a id="prerequisites-and-environment-setup"></a>
 ## 4. Prerequisites & Environment Setup
 
 ### System Requirements
@@ -175,8 +252,10 @@ python -m pip install -r requirements.txt
 
 ---
 
+<a id="automated-tools-execution-guide"></a>
 ## 5. Automated Tools Execution Guide
 
+<a id="a-cisco-asa-security-hardening-audit-tool"></a>
 ### A. Cisco ASA Security Hardening Audit Tool
 Audits exported Cisco ASA configurations against 10 security domains mapped to **NIST SP 800-53 Rev. 5** and **CIS Cisco ASA Benchmark v4.1.0**.
 
@@ -214,6 +293,7 @@ bash scripts/asa-hardening-audit.sh \
 
 ---
 
+<a id="b-pre-migration-policy-and-risk-validator"></a>
 ### B. Pre-Migration Policy & Risk Validator
 Ingests firewall policy exports in **CSV format** and performs deep semantic analysis.
 
@@ -248,6 +328,7 @@ python scripts/pre-migration-validator.py \
 
 ---
 
+<a id="c-automated-rollback-workflow-and-safety-checklist"></a>
 ### C. Automated Rollback Workflow & Safety Checklist
 Ansible rollback automation engineered with **mandatory safety gates**.
 
@@ -275,6 +356,7 @@ ansible-playbook scripts/rollback-checklist.yml
 
 ---
 
+<a id="zero-trust-identity-and-cisco-ise-eap-tls-integration"></a>
 ## 6. Zero Trust Identity & Cisco ISE EAP-TLS Integration
 
 The framework provides comprehensive documentation for identity-based network access control:
@@ -283,6 +365,7 @@ The framework provides comprehensive documentation for identity-based network ac
 
 ---
 
+<a id="reusable-security-configuration-templates"></a>
 ## 7. Reusable Security Configuration Templates
 
 - **Hardened Cisco ASA Baseline** ([`templates/asa-baseline.conf`](templates/asa-baseline.conf)): Complete, commented Cisco ASA configuration featuring OOB management-only isolation, SSH v2 DH group 14+, RADIUS AAA with local fallback, timestamped logging, least-privilege ACLs, and IKEv2 IPsec VPN.
@@ -290,13 +373,65 @@ The framework provides comprehensive documentation for identity-based network ac
 
 ---
 
+<a id="automated-testing-and-empirical-evidence"></a>
 ## 8. Automated Testing & Empirical Evidence
 
-Execute the entire test framework using the unified test runner:
+The framework includes a consolidated automated test suite designed to validate core migration logic, static configuration security auditing, policy anomaly detection, and rollback safety gates in offline, local lab test environments.
 
-```bash
-bash tests/run_tests.sh
-```
+### Distinctions Across Testing Dimensions
+
+- **Automated Tests That Have Actually Passed**:
+  - **Master Consolidated Test Runner (`tests/run_tests.sh`)**: 6 total test suites evaluated (5 passed, 0 failed, 1 skipped: native `ansible-playbook` CLI check is optional in environments lacking Ansible Core and is verified via Python PyYAML).
+  - **Python Pre-Migration Unit Tests (`tests/test_firewall_precheck.py`)**: 18 automated unit tests executed via Python's standard `unittest` framework, passing in ~1.1s. Covers IPv4 address arithmetic, invalid CIDRs, route parsing, duplicate objects, inverted ranges, and unreachable next-hops.
+  - **Bash Security Hardening Shell Tests (`tests/test_asa_security_audit.sh`)**: 17 shell unit tests passing across hardened baseline validation, insecure baseline detection, sensitive secret masking, and CLI error handling.
+  - **CSV Policy Validator (`scripts/pre-migration-validator.py`)**: Executed against sample rules, successfully identifying 1 duplicate rule, 3 shadow rules, 1 any-any rule, and 4 high-risk management ports.
+  - **Cisco ASA Hardening Audit Tool (`scripts/asa-hardening-audit.sh`)**: Executed against sample ASA configs, successfully checking 10 security domains mapped to NIST SP 800-53 Rev. 5 and CIS Benchmark v4.1.0 controls.
+  - **Ansible Playbook & Checklist Syntax Verification**: Validated via PyYAML parser without syntax or schema errors.
+
+- **Example and Simulated Test Data**:
+  - All test data files (`tests/sample-firewall-rules.csv`, `tests/sample-asa-config.txt`, `data/sample/asa-secure.cfg`, `data/sample/asa-insecure.cfg`, `data/sample/migration-valid.json`, `data/sample/backup.cfg`) are synthetic fixtures.
+  - All IP addresses and domains strictly adhere to RFC 5737 documentation blocks (`192.0.2.0/24`, `198.51.100.0/24`, `203.0.113.0/24`), RFC 2606 reserved domains (`.example`), and RFC 6996 private ASNs.
+  - No production enterprise configurations, customer credentials, or live network captures are included.
+
+- **Features Requiring Validation in Production Environments**:
+  - Physical transceiver compatibility and link carrier states across physical interfaces.
+  - Live dynamic routing convergence (BGP transit peering sessions, OSPF neighbor adjacencies, route dampening).
+  - Stateful session handling and dynamic NAT translation table (`xlate`) preservation under live production loads.
+  - Live 802.1X / EAP-TLS client authentication through physical switch hardware to production Cisco ISE policy nodes.
+  - Active AnyConnect/IKEv2 client VPN session cutover with enterprise identity stores (Active Directory, Azure AD, SAML IdPs).
+  - Live appliance configuration restoration via Ansible `cisco.asa` module over operational network transport (`network_cli`).
+
+- **Known Technical Limitations**:
+  - **Heuristic Pattern Matching**: Static auditing uses regular expression analysis optimized for standard Cisco ASA CLI formatting. Non-standard multi-line constructs may require manual review.
+  - **Offline Visibility Scope**: Static configuration audits cannot evaluate dynamic policies injected at runtime by Cisco ISE (such as Downloadable ACLs or Security Group Tags).
+  - **Non-Intrusive Design**: The framework does not perform active network port scanning, stateful packet injection, or vulnerability probing.
+  - **Lab & Simulation Boundaries**: Tests are validated in local/offline test harnesses; full production readiness requires isolated hardware staging prior to live deployment.
+
+- **Commands Required to Reproduce the Tests**:
+  - Run the master test runner:
+    ```bash
+    bash tests/run_tests.sh
+    ```
+  - Run the Python unit tests independently:
+    ```bash
+    python -m unittest tests/test_firewall_precheck.py -v
+    ```
+  - Run the Bash security audit tests:
+    ```bash
+    bash tests/test_asa_security_audit.sh
+    ```
+  - Run the CSV policy validator on sample data:
+    ```bash
+    python scripts/pre-migration-validator.py --rules tests/sample-firewall-rules.csv --output examples/migration-risk-report.json
+    ```
+  - Run the Cisco ASA hardening auditor:
+    ```bash
+    bash scripts/asa-hardening-audit.sh -i tests/sample-asa-config.txt -f json -o reports/sample/asa-hardening-report.json
+    ```
+  - Verify Ansible playbooks syntax:
+    ```bash
+    python -c "import yaml; yaml.safe_load(open('scripts/rollback-checklist.yml')); yaml.safe_load(open('ansible/rollback.yml')); print('Syntax valid')"
+    ```
 
 ### Verified Test Results:
 ```
@@ -307,7 +442,7 @@ Total Test Suites   : 6
 Passed Suites       : 5
 Failed Suites       : 0
 Skipped Suites      : 1 (ansible-playbook CLI optional; verified via PyYAML)
-Completion Time     : 2026-10-30 14:28:28Z
+Completion Time     : 2026-11-03 06:44:11Z
 Overall Test Result : ALL CRITICAL TESTS PASSED
 ================================================================================
 ```
@@ -316,6 +451,7 @@ For full test scenarios and execution outputs, see [`tests/test-results.md`](tes
 
 ---
 
+<a id="published-technical-articles"></a>
 ## 9. Published Technical Articles
 
 Two publication-ready articles:
@@ -324,6 +460,7 @@ Two publication-ready articles:
 
 ---
 
+<a id="security-safeguards-and-privacy-standards"></a>
 ## 10. Security Safeguards & Privacy Standards
 
 This repository strictly complies with international privacy and de-identification RFCs:
@@ -337,6 +474,7 @@ This repository strictly complies with international privacy and de-identificati
 
 ---
 
+<a id="supported-vs-unsupported-environments"></a>
 ## 11. Supported vs. Unsupported Environments
 
 | Dimension | Supported | Unsupported / Out of Scope |
@@ -347,6 +485,7 @@ This repository strictly complies with international privacy and de-identificati
 
 ---
 
+<a id="known-limitations"></a>
 ## 12. Known Limitations
 
 1. **Heuristic Static Analysis**: The Bash auditor utilizes regex stream parsing. Non-standard multi-line object groupings may require supplementary manual review.
@@ -355,7 +494,24 @@ This repository strictly complies with international privacy and de-identificati
 
 ---
 
-## 13. Engineering Troubleshooting Guide
+<a id="future-development-roadmap"></a>
+## 13. Future Development Roadmap
+
+Future development priorities include:
+
+- Expanding automated security policy validation and configuration assessment capabilities.
+- Extending documentation and templates to additional supported firewall platforms.
+- Improving test coverage and reproducible validation procedures.
+- Incorporating independent technical feedback and documented implementation findings.
+- Expanding integration guidance for identity-based network access controls and zero-trust architectures.
+- Publishing additional technical guidance and implementation examples.
+
+These are planned improvements and should not be represented as completed functionality.
+
+---
+
+<a id="engineering-troubleshooting-guide"></a>
+## 14. Engineering Troubleshooting Guide
 
 | Issue | Root Cause | Remediation |
 | :--- | :--- | :--- |
@@ -366,6 +522,7 @@ This repository strictly complies with international privacy and de-identificati
 
 ---
 
-## 14. Engineering Disclaimer
+<a id="engineering-disclaimer"></a>
+## 15. Engineering Disclaimer
 
 > **IMPORTANT**: This framework provides offline validation, static security auditing, and automated rollback workflows for enterprise firewall migration projects. It does not replace formal change governance, lab staging, or live device testing. Before executing changes on production firewalls, always validate configurations against physical staging equipment in an isolated lab environment.
